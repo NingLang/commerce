@@ -6,9 +6,9 @@
     <artifactId>commerce</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
-        <module>analyse</module>
         <module>commons</module>
         <module>mock</module>
+        <module>session</module>
     </modules>
     <packaging>pom</packaging>
 

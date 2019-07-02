@@ -15,10 +15,10 @@ import org.apache.commons.configuration2.builder.fluent.Parameters
   */
 object ConfigurationManager {
 
-  private val params = new Parameters()
-  private val builder = new FileBasedConfigurationBuilder[FileBasedConfiguration](classOf[PropertiesConfiguration])
-    .configure(params.properties().setFileName("commerce.properties"))
-  //配置对象
-  val config = builder.getConfiguration()
+    private val params = new Parameters()
+    private val builder = new FileBasedConfigurationBuilder[FileBasedConfiguration](classOf[PropertiesConfiguration])
+            .configure(params.properties().setFileName("commerce.properties"))
+    //配置对象
+    val config = builder.getConfiguration()
 
 }

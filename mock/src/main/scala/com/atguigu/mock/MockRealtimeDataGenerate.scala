@@ -23,40 +23,40 @@ import scala.util.Random
   */
 object MockRealtimeDataGenerate {
 
-  private def mockBatchRealtimeData(): Array[(Long,Int,Int,Int,Int)] = {
+    private def mockBatchRealtimeData(): Array[(Long, Int, Int, Int, Int)] = {
 
-    val random = new Random()
+        val random = new Random()
 
-    val batchClick = for (i <- 0 to 50) yield {
-      val userid = random.nextInt(100)
-      val timestamp = System.currentTimeMillis()
-      val province = random.nextInt(10)
-      val city = random.nextInt(10)
-      val adid = random.nextInt(30)
+        val batchClick = for (i <- 0 to 50) yield {
+            val userid = random.nextInt(100)
+            val timestamp = System.currentTimeMillis()
+            val province = random.nextInt(10)
+            val city = random.nextInt(10)
+            val adid = random.nextInt(30)
 
-      (timestamp,province,city,userid,adid)
-    }
-    batchClick.toArray
-  }
-
-  def main(args: Array[String]): Unit = {
-
-    val broker_list = ConfigurationManager.config.getString("kafka.broker.list")
-    val topics = ConfigurationManager.config.getString("kafka.topics")
-
-    val kafkaProxy = KafkaProducerProxy(broker_list, Some(topics))
-
-    while (true){
-
-      val msgs = mockBatchRealtimeData()
-      msgs.foreach{ case (timestamp,province,city,userid,adid) =>
-        kafkaProxy.send(timestamp + " " + province + " " + city + " " + userid + " " + adid)
-        println(timestamp + " " + province + " " + city + " " + userid + " " + adid)
-      }
-      Thread.sleep(5000)
+            (timestamp, province, city, userid, adid)
+        }
+        batchClick.toArray
     }
 
-    kafkaProxy.shutdown()
-  }
+    def main(args: Array[String]): Unit = {
+
+        val broker_list = ConfigurationManager.config.getString("kafka.broker.list")
+        val topics = ConfigurationManager.config.getString("kafka.topics")
+
+        val kafkaProxy = KafkaProducerProxy(broker_list, Some(topics))
+
+        while (true) {
+
+            val msgs = mockBatchRealtimeData()
+            msgs.foreach { case (timestamp, province, city, userid, adid) =>
+                kafkaProxy.send(timestamp + " " + province + " " + city + " " + userid + " " + adid)
+                println(timestamp + " " + province + " " + city + " " + userid + " " + adid)
+            }
+            Thread.sleep(5000)
+        }
+
+        kafkaProxy.shutdown()
+    }
 
 }
